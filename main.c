@@ -48,7 +48,7 @@ int main() {
     // Load XSD file:
     u8* xsd_buf = NULL;
     u32 xsd_buf_size = 0;
-    FILE* xsd_file = fopen("input.xsd", "r");
+    FILE* xsd_file = fopen("input.xsd", "rb");
     fseek (xsd_file, 0, SEEK_END);
     xsd_buf_size = ftell(xsd_file);
     fseek (xsd_file, 0, SEEK_SET);
