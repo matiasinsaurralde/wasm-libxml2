@@ -10,7 +10,8 @@
         <size>Big</size>
     </item>
     <item>
-        <namex>Item 2</name>
+        <!-- This element will trigger an error, ending tag mismatch -->
+        <name>Item 2</aaa>
         <photo>http://example.com/photo2.png</photo>
         <tags>Tag1</tags>
         <diameter>23</diameter>
