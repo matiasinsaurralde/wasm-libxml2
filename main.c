@@ -45,6 +45,8 @@ int main() {
     printf("WASM module loaded\n");
     print_alloc_mem(runtime);
 
+    clock_t begin = clock();
+
     // Load XSD file:
     u8* xsd_buf = NULL;
     u32 xsd_buf_size = 0;
@@ -123,6 +125,10 @@ int main() {
     Call(validate_fn->compiled, validate_stack, runtime->memory.mallocated, d_m3OpDefaultArgs);
     int result = *(u32*)(validate_stack);
     printf("wasm_validate_xml = %d\n", result);
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("spent: %2f\n", time_spent);
 
     m3_FreeRuntime (runtime);
     m3_FreeEnvironment (env);
