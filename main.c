@@ -8,7 +8,6 @@
 #include "m3_api_libc.h"
 #include "m3_env.h"
 
-
 IM3Module load (IM3Runtime runtime, const char* fn) {
     u8* wasm = NULL;
     u32 fsize = 0;
@@ -110,6 +109,7 @@ int main() {
     dest = ((u8*)(runtime->memory.mallocated) + (u32)(xml_buf_ptr) + 24);
     memcpy(dest, xml_buf, xml_buf_size);
 
+    // Call the validation function:
     IM3Function validate_fn;
     m3_FindFunction (&validate_fn, runtime, "wasm_validate_xml");
     m3stack_t validate_stack = (m3stack_t)(runtime->stack);
@@ -121,9 +121,11 @@ int main() {
     *(u32*)(validate_stack_2) = (u32)schema_ptr;
     m3StackCheckInit();
     Call(validate_fn->compiled, validate_stack, runtime->memory.mallocated, d_m3OpDefaultArgs);
+
+    // Print the output and cleanup the environment:
     int result = *(u32*)(validate_stack);
     printf("wasm_validate_xml = %d\n", result);
 
-    m3_FreeRuntime (runtime);
-    m3_FreeEnvironment (env);
+    m3_FreeRuntime(runtime);
+    m3_FreeEnvironment(env);
 }
